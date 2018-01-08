@@ -1,0 +1,32 @@
+{
+  "name": "coinfix.io-smart-contracts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "./test"
+  },
+  "scripts": {
+    "test": "truffle test",
+    "coverage": "./node_modules/.bin/solidity-coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChainXcom/coinfix.io-smart-contracts.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChainXcom/coinfix.io-smart-contracts/issues"
+  },
+  "homepage": "https://github.com/ChainXcom/coinfix.io-smart-contracts#readme",
+  "dependencies": {
+    "bignumber.js": "^5.0.0",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "zeppelin-solidity": "^1.5.0"
+  },
+  "devDependencies": {
+    "solidity-coverage": "^0.4.8"
+  }
+}
