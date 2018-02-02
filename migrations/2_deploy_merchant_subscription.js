@@ -7,7 +7,7 @@ module.exports = function (deployer, network, accounts) {
         , merchant = accounts[1]
     ;
 
-    deployer.deploy(MerchantSubscription, merchant, 'merchant_subscription_test_contract', {from: owner});
+    deployer.deploy(MerchantSubscription, merchant, 'merchant_subscription_test_contract', web3.toWei(0.01, 'ether'), {from: owner});
 
 
     // deployer.deploy(SafeMath);
