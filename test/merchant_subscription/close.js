@@ -12,7 +12,8 @@ contract('MerchantSubscription:close', (accounts) => {
         owner_address = accounts[0]
         , customer_address = accounts[2]
         , bob_address = accounts[3]
-        ,  amount = web3.toWei(0.01, 'ether')
+        , amount = web3.toWei(0.01, 'ether')
+        , data = '0x' + new Buffer('789c475f-e7a4-4fa4-bf4f-00a00932fc75').toString('hex')
     ;
 
     it('call close by !owner', async () => {
@@ -26,6 +27,10 @@ contract('MerchantSubscription:close', (accounts) => {
 
         await instance.close({from: owner_address});
 
-        return assert.isRejected(instance.sendTransaction({from: customer_address, value: amount}), `VM Exception`);
+        return assert.isRejected(instance.sendTransaction({
+            from: customer_address,
+            value: amount,
+            data
+        }), `VM Exception`);
     });
 });

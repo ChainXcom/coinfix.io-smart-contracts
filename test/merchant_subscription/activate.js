@@ -12,12 +12,17 @@ contract('MerchantSubscription:activate', (accounts) => {
         , customer_address = accounts[2]
         , bob_address = accounts[3]
         , amount = web3.toWei(0.01, 'ether')
+        , data = '0x' + new Buffer('789c475f-e7a4-4fa4-bf4f-00a00932fc75').toString('hex')
     ;
 
     it(`send eth when contract is not active`, async () => {
         const instance = await MerchantSubscription.deployed();
 
-        return assert.isRejected(instance.sendTransaction({from: customer_address, value: amount}), `VM Exception`);
+        return assert.isRejected(instance.sendTransaction({
+            from: customer_address,
+            value: amount,
+            data
+        }), `VM Exception`);
     });
 
     it(`activate failed when called by !merchant address`, async () => {
@@ -38,7 +43,7 @@ contract('MerchantSubscription:activate', (accounts) => {
         assert.equal(status[0], true);
 
         // send eth and check status
-        await instance.sendTransaction({from: customer_address, value: amount});
+        await instance.sendTransaction({from: customer_address, value: amount, data});
         const balance_after = await instance.getBalance.call();
         return assert.equal(balance_after, amount);
     });

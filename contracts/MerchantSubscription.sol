@@ -22,6 +22,9 @@ contract MerchantSubscription is Claimable, Pausable {
 
 	string public constant version = '1.0.5';
 
+	/* uuid example: 789c475f-e7a4-4fa4-bf4f-10a00932fc76 */
+	uint8 public constant dataLength = 36;
+
 	uint minDeposit;
 
 
@@ -45,6 +48,7 @@ contract MerchantSubscription is Claimable, Pausable {
 	modifier allowDeposit {
 		require(!status.isClosed && status.isActive && !paused);
 		require(msg.value >= minDeposit);
+		require(msg.data.length == dataLength);
 		_;
 	}
 

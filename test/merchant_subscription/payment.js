@@ -13,6 +13,7 @@ contract('MerchantSubscription:payment', (accounts) => {
         , customer_address = accounts[2]
         , payment_amount = web3.toWei(0.1, 'ether')
         , amount_below_minimum = web3.toWei(0.001, 'ether')
+        , data = '0x' + new Buffer('789c475f-e7a4-4fa4-bf4f-00a00932fc75').toString('hex')
     ;
 
     it(`contract not activated`, async () => {
@@ -20,7 +21,8 @@ contract('MerchantSubscription:payment', (accounts) => {
 
         return assert.isRejected(instance.sendTransaction({
             from: customer_address,
-            value: payment_amount
+            value: payment_amount,
+            data
         }), `VM Exception`);
     });
 
@@ -29,7 +31,7 @@ contract('MerchantSubscription:payment', (accounts) => {
 
         await instance.activate({from: merchant_address});
 
-        await instance.sendTransaction({from: customer_address, value: payment_amount});
+        await instance.sendTransaction({from: customer_address, value: payment_amount, data});
 
         const contract_balance = await instance.getBalance.call();
 
@@ -43,7 +45,8 @@ contract('MerchantSubscription:payment', (accounts) => {
 
         return assert.isRejected(instance.sendTransaction({
             from: customer_address,
-            value: payment_amount
+            value: payment_amount,
+            data
         }), `VM Exception`);
     });
 
@@ -52,7 +55,7 @@ contract('MerchantSubscription:payment', (accounts) => {
 
         await instance.unpause({from: owner_address});
 
-        await instance.sendTransaction({from: customer_address, value: payment_amount});
+        await instance.sendTransaction({from: customer_address, value: payment_amount, data});
 
         const contract_balance = await instance.getBalance.call();
 
@@ -64,7 +67,8 @@ contract('MerchantSubscription:payment', (accounts) => {
 
         return assert.isRejected(instance.sendTransaction({
             from: customer_address,
-            value: amount_below_minimum
+            value: amount_below_minimum,
+            data
         }), `VM Exception`);
     });
 });

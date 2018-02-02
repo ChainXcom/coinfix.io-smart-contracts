@@ -13,6 +13,7 @@ contract('MerchantSubscription:setMinDeposit', (accounts) => {
         , customer_address = accounts[2]
         , min_deposit_to_set = web3.toWei(1, 'ether')
         , payment_amount = web3.toWei(0.1, 'ether')
+        , data = '0x' + new Buffer('789c475f-e7a4-4fa4-bf4f-00a00932fc75').toString('hex')
     ;
 
     it(`min deposit (1 eth) is gt payment amount (0.1 eth)`, async () => {
@@ -24,7 +25,8 @@ contract('MerchantSubscription:setMinDeposit', (accounts) => {
 
         return assert.isRejected(instance.sendTransaction({
             from: customer_address,
-            value: payment_amount
+            value: payment_amount,
+            data
         }), `VM Exception`);
     });
 });
